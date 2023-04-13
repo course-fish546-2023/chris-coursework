@@ -46,9 +46,17 @@ quant -i ../data/cgigas_roslin_rna.index \
 ```
 
 START HERE Everything above this was done in class and is a bit wonky
+```{r}
+getwd()
+```
+```{bash}
+cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1
+ls
+```
 
 ```{bash}
 # Already have the index, no need to run unless an error is had in OG data downloaded on 4/4
+
 cd ../data
 curl --insecure -O https://gannet.fish.washington.edu/seashell/bu-github/nb-2023/Cgigas/data/rna.fna
 ```
@@ -114,7 +122,7 @@ perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
     ../output/kallisto_01/N59_S189/abundance.tsv
 ```
 
-```{r}
+```{r, echo=FALSE}
 library("DESeq2")
 library(tidyverse)
 # install.packages("pheatmap")
@@ -122,7 +130,7 @@ library(pheatmap)
 library(RColorBrewer)
 library(data.table)
 ```
-```{r}
+```{r, echo=FALSE}
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 

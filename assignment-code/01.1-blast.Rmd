@@ -1,3 +1,5 @@
-### Blast Off! ![ba](https://github.com/course-fish546-2023/chris-coursework1/blob/main/photos/fleetweek.jpeg?raw=true) #change rendered image size
+### Blast Off! ![ba](https://github.com/course-fish546-2023/chris-coursework1/blob/main/photos/fleetweek.jpeg?raw=true){width="20%"}
 
-The workflow to BLAST genetic sequences is similar at the
+The workflow to BLAST genetic sequences is similar regardless of type (i.e., genome, transcriptome, protein, gene, etc.). 'Blasting' a sequence is a fun way to compare your genetic data against the largest 'crowd sourced' database of reference genetic data available for free. Here we will walk through the process and a few things you can do to use with the data you find.  
+
+

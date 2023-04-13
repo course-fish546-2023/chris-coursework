@@ -9,4 +9,6 @@ New terminology to you:
 *Gene Enrichment Analysis  
 *GO Terms  
 
-#### Note: File structure is paramount! Check and double check you know where you are putting your files - it will save you in the long run!
+#### Note: File structure is paramount! Check and double check you know where you are putting your files - it will save you in the long run!  
+
+
