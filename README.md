@@ -1,3 +1,3 @@
 # chris-coursework  
 
-### Repo for homewok in and in class assignments
+### Repo for homewok and in class assignments
