@@ -9,7 +9,7 @@ ls /home/shared/8TB_HDD_02/cnmntgna/Applications/bioinfo/
 
 # trying to remove macos copy, receive an error message
 # made the removal happen over in the 'Terminal' access tab
-rm -r ncbi-blast-2.13.0+-x64-macosx.tar.gz
+# rm -r ncbi-blast-2.13.0+-x64-macosx.tar.gz
 ```
 
 ```{bash}
@@ -17,7 +17,7 @@ rm -r ncbi-blast-2.13.0+-x64-macosx.tar.gz
 ```
 
 ```{bash}
-cd /home/shared/8TB_HDD_02/cnmntgna/data
+cd ../data
 curl -O https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
 mv uniprot_sprot.fasta.gz uniprot_sprot_r2023_01.fasta.gz
 gunzip -k uniprot_sprot_r2023_01.fasta.gz
@@ -25,7 +25,7 @@ ls ../data
 ```
 
 ```{bash}
-
+# add r engine/ false echo code for rendering in 1.1
 /home/shared/8TB_HDD_02/cnmntgna/Applications/bioinfo/ncbi-blast-2.13.0+/bin/makeblastdb \
 -in /home/shared/8TB_HDD_02/cnmntgna/data/uniprot_sprot_r2023_01.fasta \
 -dbtype prot \
@@ -45,6 +45,7 @@ grep -c ">" /home/shared/8TB_HDD_02/cnmntgna/data/Ab_4denovo_CLC6_a.fa
 ```
 
 ```{bash}
+#fix my paths for reproducibility purposes, the full path is incorrect for that purpose
 /home/shared/8TB_HDD_02/cnmntgna/Applications/bioinfo/ncbi-blast-2.13.0+/bin/blastx \
 -query /home/shared/8TB_HDD_02/cnmntgna/data/Ab_4denovo_CLC6_a.fa \
 -db /home/shared/8TB_HDD_02/cnmntgna/output/blastdb/uniprot_sprot_r2023_01 \
