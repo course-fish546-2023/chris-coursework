@@ -70,6 +70,9 @@ curl -O "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/sea
 
 ```{bash}
 curl -O -H "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/stream?compressed=true&fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_f%2Cgo%2Cgo_p%2Cgo_c%2Cgo_id%2Ccc_interaction%2Cec%2Cxref_reactome%2Cxref_unipathway%2Cxref_interpro&format=tsv&query=%28%2A%29%20AND%20%28reviewed%3Atrue%29"
+
+
+#this is the reference table with GO terms and protein names to join with my blast output terms. I can use the second gannet url to bypass. This is an easy confuse becasue my first DB is named the same but is just so I can reference. Note I am aligning, not comparing the sequences.
 ```
 
 ```{bash}
