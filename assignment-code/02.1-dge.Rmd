@@ -34,8 +34,8 @@ knitr::opts_chunk$set(
   highlight = TRUE,    # Highlight code
   echo = TRUE,         # Display code chunks
   eval = FALSE,        # Evaluate code chunks
-  warning = TRUE,     # Hide warnings
-  message = TRUE,     # Hide messages
+  warning = TRUE,      # Hide warnings
+  message = TRUE,      # Hide messages
   fig.width = 6,       # Set plot width in inches
   fig.height = 4,      # Set plot height in inches
   fig.align = "center" # Align plots to the center
@@ -63,17 +63,18 @@ pre[class] {
 
 # Purpose
 
-Using RNASeq data to compare gene expression is a standard workflow to help scientists clarify which genes are differently expressed than their 'normal' state when exposed to your perturbations. We're starting from the place where you've already QC'd your RNASeq files and are ready to jump into quantification and statistical analysis. If you're interested in learning more about the the QC process and application, check out [The Galaxy Project](https://training.galaxyproject.org/training-material/topics/sequence-analysis/tutorials/quality-control/tutorial.html). If you already know but want to check out your options, look into [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) or [MultiQC](https://multiqc.info/).
+Using RNASeq data to compare gene expression is a standard workflow to help scientists clarify which genes are differently expressed than their 'normal' state when exposed to perturbations. We're starting from the place where you've already QC'd your RNASeq files and are ready to jump into quantification and statistical analysis. If you're interested in learning more about the the QC process and application, check out [The Galaxy Project](https://training.galaxyproject.org/training-material/topics/sequence-analysis/tutorials/quality-control/tutorial.html). If you already know but want to check out your options, look into [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) or [MultiQC](https://multiqc.info/).
 
 ```{r callout, type='note'}
 
-knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true", width = 50, height = 50)
+knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true", "width = 50", "height = 50")
 "The truth is, there is no one that can do what I do. If you don't pay attention to your file structure and comment your code- you're right. Take the time now to intentionally set up your future self and colleagues for success."
 
 ```
 
-# Set yourself for success
-## Know where you are and where you're placing your files
+# Set yourself up for success
+
+## Know where you are & where you're placing your files
 
 ```{r}
 
@@ -91,19 +92,22 @@ cd ../data
 
 ```
 
+# Grab what you need to start
+
+## This file is to create an index. The index will be used to quantify the transcripts abundances. The index file maps the RNASeq reads to the transcriptome (or genome) to quantify expression level when we use Kallisto.
+
 ### We will be assessing the genome of the Pacific oyster, *Crassostra gigas*.
 
 ```{bash}
-
-# This file is to create an index. The index will be used to quantify the transcripts abundances. The index file maps the RNASeq reads to the transcriptome (or genome) to quantify expression level when we use Kallisto. 
 
 cd ../data
 curl --insecure -O https://gannet.fish.washington.edu/seashell/bu-github/nb-2023/Cgigas/data/rna.fna
 
 ```
 
-#Packages & Libraries
-##Load the packages you'll need by 'calling' them from your package library
+# Packages & Libraries 
+
+## Load the packages you'll need by 'calling' them from your package library
 
 ```{r setup, include=TRUE, message=FALSE, warning=FALSE}
 
@@ -122,11 +126,13 @@ library(Biostrings)
 
 ```{r callout, type='note'}
 
-knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true", width = 50, height = 50)
-"I had hope. Anyway, you ended up disappointing me more than any of the other silly girls. If your library call doesn't yield the package you requested use the install.packages("package_name") code."
+knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true")
+
+"I had hope. Anyway, you ended up disappointing me more than any of the other silly packages. If your library call doesn't yield the package you requested use the install.packages() code."
 
 ```
 
+## We're going to access Kallisto, ask it to create our index, tell it where to create that index and what to name it. 
 
 ```{bash}
 
@@ -136,6 +142,8 @@ index -i \
 ../data/rna.fna
 
 ```
+
+## Now we'll navigate to our data folder, ask it to grab our comparison files (only the necessary fastq.gz files, nothing more) from the URL listed below, and add them 'as is' to our data directory.
 
 ```{bash}
 
@@ -147,10 +155,17 @@ https://gannet.fish.washington.edu/seashell/bu-github/nb-2023/Cgigas/data/nopp/
 
 ```
 
+## You will have to use the 'mkdir' bash command to create the output folder in Kalliso. The code is commented out so that it diens't run, but it is a necessary step if this is your first time doing it.
+
 ```{bash}
 
-# mkdir ../output/kallisto_01
-# made this in class, commented out to prevent error
+#mkdir ../output/kallisto_01
+
+```
+
+## 
+
+```{bash}
 
 find ../data/*fastq.gz \
 | xargs basename -s _L001_R1_001.fastq.gz | xargs -I{} /home/shared/kallisto/kallisto \
@@ -160,6 +175,16 @@ quant -i ../data/cgigas_roslin_rna.index \
 --single -l 100 -s 10 ../data/{}_L001_R1_001.fastq.gz
 
 ```
+
+```{r callout, type='note'}
+
+knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true")
+
+"Don't be ridiculous, everybody wants this. Everybody wants to be us. Every file wants to be in a repo, but not every file can be. At this point if you haven't saved and committed your work to your repo, you need to. Keep in mind that GitHub will not allow you to commit files greater than 100MB. If any of that sounded new, check out [Happy Git] (https://happygitwithr.com/index.html) to get yourself in order!"
+
+```
+
+
 
 ```{bash}
 
@@ -266,53 +291,3 @@ abline(h=c(-1,1), col="blue")
 write.table(tmp.sig, "../output/DEGlist.tab", row.names = T)
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

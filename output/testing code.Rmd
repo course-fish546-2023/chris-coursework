@@ -1,3 +1,22 @@
+## Differential Gene Expression: Example workflow using Kallisto and DESeq2
+
+Using RNASeq data to compare gene expression is a standard workflow to help scientists clarify which genes are differently expressed than their 'normal' state when exposed to your perturbations. This workflow uses the following tools: 
+Kallisto
+DESeq2
+
+"By all means, move at a glacial pace. You know that thrills me." 
+"The truth is, there is no one that can do what I do."
+"Don't be ridiculous, everybody wants this. Everybody wants to be us."
+"That's all."
+"Please bore someone else with your questions."
+“And this layout for the Winter Wonderland Spread. Not wonderful yet.”
+Now we have a really neat table to the differentially expressed genes and nothing else. We have to make this wonderful by 
+
+"I Had Hope. Anyway, You Ended Up Disappointing Me More Than Any Of The Other Silly Girls.”
+
+
+
+
 ---
 title: "Differential Gene Expression Analysis with Kallisto & DESeq2"
 subtitle: "Selecting expression from a pile of stuff"
@@ -59,17 +78,18 @@ pre[class] {
 }
 ```
 
-# Advanced Prep
+# Purpose
 
-For this assignment you will be taking RNA-seq data, and running a common differential gene expression analysis, without the use of a reference genome. The end product will be a number of plots and table of differentially expressed genes.
+Using RNASeq data to compare gene expression is a standard workflow to help scientists clarify which genes are differently expressed than their 'normal' state when exposed to your perturbations. We're starting from the place where you've already QC'd your RNASeq files and are ready to jump into quantification and statistical analysis. If you're interested in learning more about the the QC process and application, check out [The Galaxy Project](https://training.galaxyproject.org/training-material/topics/sequence-analysis/tutorials/quality-control/tutorial.html). If you already know but want to check out your options, look into [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) or [MultiQC](https://multiqc.info/).
 
-::: callout-important
-**Pre-reqs:** This code contains relative paths that only work within the *raven* Roberts' Lab Server, where the data for this assignment is housed
-:::
+```{r callout, type='note'}
 
-------------------------------------------------------------------------
+knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true", width = 50, height = 50)
+"The truth is, there is no one that can do what I do. If you don't pay attention to your file structure and comment your code- you're right. Take the time now to intentionally set up your future self and colleagues for success."
 
-Install Packages
+```
+
+#Packages
 
 ```{r packages, eval=TRUE}
 if ("knitr" %in% rownames(installed.packages()) == 'FALSE') BiocManager::install("knitr") 
