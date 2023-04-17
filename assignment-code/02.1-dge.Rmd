@@ -109,7 +109,7 @@ curl --insecure -O https://gannet.fish.washington.edu/seashell/bu-github/nb-2023
 
 ## Load the packages you'll need by 'calling' them from your package library
 
-```{r setup, include=TRUE, message=FALSE, warning=FALSE}
+```{r, include=TRUE, message=FALSE, warning=FALSE}
 
 BiocManager::install("DESeq2")
 library(knitr)
@@ -163,7 +163,7 @@ https://gannet.fish.washington.edu/seashell/bu-github/nb-2023/Cgigas/data/nopp/
 
 ```
 
-## 
+## Here we are quantifying our RNASeq results with Kallisto. We do this by first searching for our fastq.gz files, organizes what we find, cleans up the names of what we find, and then using the paramters set at the bottom of the code chunk we are creating individual outputs for each found file.
 
 ```{bash}
 
@@ -184,7 +184,7 @@ knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/
 
 ```
 
-
+## This Bash code runs the 'abundance_estimates' script from the Trinity RNA-seq package and creates a gene expression matrix from the output of Kallisto quantification results.
 
 ```{bash}
 
@@ -219,6 +219,8 @@ perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
     ../output/kallisto_01/N59_S189/abundance.tsv
     
 ```
+
+
 
 ```{r}
 
