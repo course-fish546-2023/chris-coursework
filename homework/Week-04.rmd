@@ -10,11 +10,14 @@ format:
     code-overflow: wrap
 ---
 
-a)  **What is `tmux` and how does this relate to our current way of working on raven?**
+a)  **What is `tmux` and how does this relate to our current way of working on raven?**  
+'tmux' is shorthand for *Terminal multiplexer* which is a way to use the super computer to code in multiple languages at a time, much like we can do in RStudio. I don't mean multiple languages like in code chunks in markdown, but moreso in Raven where we can run code in the console and the terminal if we choose to. 
 
-b)  **What is `ssh` and what would the code be you would type if you were going to `ssh` into raven?**
+b)  **What is `ssh` and what would the code be you would type if you were going to `ssh` into raven?**  
+'ssh' is shorthand for *secure shell* which is an encryted conection you setup between your machine and your remote platforms. If I was going to SSH into Raven from my machine I would generate a public SSH key. I would type <ssh-keygen -t ed25519 -C "key for x reason">
 
 c)  **What has been the most challenging part of your research project? Are you happy with your organization skills? If not what could be improved?**
+I struggled to get myself going, but I have to QC the downloaded files to know that I have the right information.
 
-
-d)  **For last weeks assignment what did you appreciate the most about knitting documents?**
+d)  **For last weeks assignment what did you appreciate the most about knitting documents?**  
+I have had a great number of errors with my knitting process. I do not expect there to be an easy solution as each time I clear up a run error, a new one pops up to take its place. Most of which is revealing direct code errors with a few process errors that can be fixed if I used the correct code to bypass them.
