@@ -15,6 +15,12 @@ output:
     callout-appearance: default
 ---
 
+```{r, echo=FALSE}
+#install.packages("quarto")
+```
+#Needed
+# this is the css directive to add a banner behind my title, if it doesn't render that is ok we can remove it - it is not necessary, try to replace the path with the png before completely ditching it
+
 ```{css, echo=FALSE}
 
 .title-banner {
@@ -27,6 +33,8 @@ output:
 }
 
 ```
+# Needed
+# this chunk is the global default options chunk. unless otherwise specified each of the chunks will run according to these parameters
 
 ```{r setup, include=FALSE}
 
@@ -42,7 +50,8 @@ knitr::opts_chunk$set(
   )
 
 ```
-
+# Needed
+# this sets the document parameters for rendering the document without over- or under- sized things
 ```{css, echo=FALSE}
 pre {
   max-height: 300px;
@@ -52,26 +61,40 @@ pre[class] {
   max-height: 100px;
 }
 ```
-
+# Needed
+# this controls the navigation ability of the page 
 ```{css, echo=FALSE}
+
 .scroll-100 {
   max-height: 100px;
   overflow-y: auto;
   background-color: inherit;
 }
-```
 
+```
+# Needed
+# this will be removed because you cannot set a callout chunk like this no matter what Chat GPT tells you to fix your callout syntax 
+```{css, echo=FALSE}
+
+file.copy(from = "https://github.com/course-fish546-2023/chris-coursework1/blob/main/photos/miranda.png?raw=true", to = "photos/miranda.png", overwrite = TRUE)
+
+```
+#Start of the doc behind the header, everything else to this point is setup
 # Purpose
 
 Using RNASeq data to compare gene expression is a standard workflow to help scientists clarify which genes are differently expressed than their 'normal' state when exposed to perturbations. We're starting from the place where you've already QC'd your RNASeq files and are ready to jump into quantification and statistical analysis. If you're interested in learning more about the the QC process and application, check out [The Galaxy Project](https://training.galaxyproject.org/training-material/topics/sequence-analysis/tutorials/quality-control/tutorial.html). If you already know but want to check out your options, look into [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) or [MultiQC](https://multiqc.info/).
 
-```{r callout, type='note'}
+#Remove
+```{r}
+library(quarto)
 
-knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true", "width = 50", "height = 50")
-"The truth is, there is no one that can do what I do. If you don't pay attention to your file structure and comment your code- you're right. Take the time now to intentionally set up your future self and colleagues for success."
-
+quarto_callout(
+  type = "note",
+  icon = "photos/miranda.png",
+  content = "The truth is, there is no one that can do what I do. If you don't pay attention to your file structure and comment your code- you're right. Take the time now to intentionally set up your future self and colleagues for success."
+)
 ```
-
+#Needed
 # Set yourself up for success
 
 ## Know where you are & where you're placing your files
@@ -105,7 +128,7 @@ curl --insecure -O https://gannet.fish.washington.edu/seashell/bu-github/nb-2023
 
 ```
 
-# Packages & Libraries 
+# Packages & Libraries
 
 ## Load the packages you'll need by 'calling' them from your package library
 
@@ -123,6 +146,8 @@ library(DT)
 library(Biostrings)
 
 ```
+#Needed
+#Fix this callout to match the correct Quarto syntax
 
 ```{r callout, type='note'}
 
@@ -132,7 +157,7 @@ knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/
 
 ```
 
-## We're going to access Kallisto, ask it to create our index, tell it where to create that index and what to name it. 
+## We're going to access Kallisto, ask it to create our index, tell it where to create that index and what to name it.
 
 ```{bash}
 
@@ -143,7 +168,7 @@ index -i \
 
 ```
 
-## Now we'll navigate to our data folder, ask it to grab our comparison files (only the necessary fastq.gz files, nothing more) from the URL listed below, and add them 'as is' to our data directory.
+## We'll navigate to our data folder, ask it to grab our comparison files (only the necessary fastq.gz files, nothing more) from the URL listed below, and add them 'as is' to our data directory.
 
 ```{bash}
 
@@ -176,6 +201,7 @@ quant -i ../data/cgigas_roslin_rna.index \
 
 ```
 
+# fix the callout syntax
 ```{r callout, type='note'}
 
 knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true")
@@ -184,7 +210,7 @@ knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/
 
 ```
 
-## This Bash code runs the 'abundance_estimates' script from the Trinity RNA-seq package and creates a gene expression matrix from the output of Kallisto quantification results.
+## This Bash code runs the 'abundance_estimates' script from the Trinity RNASeq package and creates a gene expression matrix from the output of Kallisto quantification results.
 
 ```{bash}
 
@@ -220,8 +246,7 @@ perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
     
 ```
 
-
-
+## We are creating a count matrix dataframe, a.k.a. a table of how many times a feature (i.e., gene) is observed in our sequence. Each row is a feature and each column is a sample. After we create the table we are going to take a look at it to make sure it looks like we want it. We're doing this in standard R programming commands.
 ```{r}
 
 countmatrix <- read.delim("../output/kallisto_01.isoform.counts.matrix", header = TRUE, sep = '\t')
@@ -230,14 +255,14 @@ countmatrix <- countmatrix[,-1]
 head(countmatrix)
 
 ```
-
+## Since all of the values in our table are very large and burdensome to read, we are going to round the values to make it easier to get at what we really want. Once we do that, we will use str() to take a fast look at the results.
 ```{r}
 
 countmatrix <- round(countmatrix, 0)
 str(countmatrix)
 
 ```
-
+## We have what we want and we are moving into using the DESeq package. First, we're going to add the metadata to the count matrix we made a few steps back. Second, we're going to put them together and create a new dataset that can be processed in the DESeq program.
 ```{r}
 
 deseq2.colData <- data.frame(condition=factor(c(rep("control", 12), rep("desicated", 12))), 
@@ -248,7 +273,18 @@ deseq2.dds <- DESeqDataSetFromMatrix(countData = countmatrix,
                                      design = ~ condition)
 
 ```
-
+## We are using DESeq to find these outcomes: 
+- estimating size factors
+- estimating dispersions
+- gene-wise dispersion estimates
+- mean-dispersion relationship
+- final dispersion estimates
+- fitting model and testing
+-- replacing outliers and refitting for 5677 genes
+-- DESeq argument 'minReplicatesForReplace' = 7 
+-- original counts are preserved in counts(dds)
+- estimating dispersions
+- fitting model and testing
 ```{r}
 
 deseq2.dds <- DESeq(deseq2.dds)
