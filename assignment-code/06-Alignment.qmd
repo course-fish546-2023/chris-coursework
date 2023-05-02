@@ -1,5 +1,10 @@
 # Trying the Alignment Assignment for week 6
 ## All code provided by SR - will adjust after I can work the workflow
+
+```{r}
+getwd()
+```
+
 ```{r, engine='bash'}         
 cd ../data
 curl -O https://gannet.fish.washington.edu/seashell/bu-mox/scrubbed/120321-cvBS/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam
