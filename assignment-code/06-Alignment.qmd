@@ -43,7 +43,7 @@ curl -O https://gannet.fish.washington.edu/panopea/Cg-roslin/GCF_902806645.1_cgi
 -p 4 \
 -1 ../data/F143n08_R1_001.fastq.gz \
 -2 ../data/F143n08_R2_001.fastq.gz \
--S ../output/F143_cgigas.sam
+-S /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1//output/F143_cgigas.sam
 ```
 
 ```{r, engine='bash'}
