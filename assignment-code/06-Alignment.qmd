@@ -37,13 +37,14 @@ curl -O https://gannet.fish.washington.edu/panopea/Cg-roslin/cgigas_uk_roslin_v1
 curl -O https://gannet.fish.washington.edu/panopea/Cg-roslin/GCF_902806645.1_cgigas_uk_roslin_v1_genomic-mito.gtf
 ```
 
+## I've made adjustments to the OG code, i think i have to make the index
 ```{r, engine='bash'}
 /home/shared/hisat2-2.2.1/hisat2 \
--x ../output/cgigas_uk_roslin_v1_genomic-mito.index \
+-x /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/cgigas_uk_roslin_v1_genomic-mito.index \
 -p 4 \
 -1 ../data/F143n08_R1_001.fastq.gz \
 -2 ../data/F143n08_R2_001.fastq.gz \
--S /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1//output/F143_cgigas.sam
+-S /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/output/F143_cgigas.sam
 ```
 
 ```{r, engine='bash'}
