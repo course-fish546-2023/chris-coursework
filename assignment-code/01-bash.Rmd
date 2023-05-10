@@ -1,0 +1,72 @@
+---
+title: "Bash Tutorial"
+subtile: Week 01
+author: "Chris Mantegna"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+  theme: cerulean
+  highlight: 
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+    callout-appearance: default
+---
+
+# Must download this file before getting started
+```{r, engine=bash}
+
+pwd 
+
+wget -P /home/shared/8TB_HDD_02/cnmntgna/data https://d.pr/f/BDaGTy
+
+```
+# adding the steps in this document as a record, beyond download the work will be done directly in terminal
+```{r, engine=bash}
+
+$
+
+```
+```{r, engine=bash}
+
+whoami
+
+```
+
+```{r, engine=bash}
+
+pwd
+
+```
+# Moving back to the directory that has my data file
+```{r, engine=bash}
+ cd /home/shared/8TB_HDD_02/cnmntgna/data
+ls
+
+```
+# 
+```{r, engine=bash}
+
+$
+
+```
+
+```{r, engine=bash}
+
+$
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
