@@ -14,10 +14,23 @@ output:
     code_download: true
     callout-appearance: default
 ---
+```{r setup, include=FALSE}
+# this is just here to remind me what I'm doing
+knitr::opts_chunk$set(
+  highlight = TRUE,    # Highlight code
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = TRUE,     # Hide warnings
+  message = TRUE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center" # Align plots to the center
+  )
+```
 
 # Must download this file before getting started: <https://d.pr/f/BDaGTy>. I downloaded from the course page and unzipped, placed in data file for coursework repo.
 
-```{r, engine=bash}
+```{r, engine= bash}
 
 pwd 
 
