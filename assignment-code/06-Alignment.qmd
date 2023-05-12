@@ -1,43 +1,90 @@
-# Trying the Alignment Assignment for week 6
-## All code provided by SR - will adjust after I can work the workflow
+---
+title: "Alignment"
+author: "Chris Mantegna"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+  theme: cerulean
+  highlight: 
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+    callout-appearance: default
+---
+```{r setup, include=FALSE}
 
-```{r}
-getwd()
+knitr::opts_chunk$set(
+  highlight = TRUE,    # Highlight code
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = TRUE,     # Hide warnings
+  message = TRUE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center" # Align plots to the center
+  )
+
 ```
 
-```{r, engine='bash'}         
+```{r}
+
+getwd()
+
+```
+
+```{r, engine='bash'}
+
 cd ../data
 curl -O https://gannet.fish.washington.edu/seashell/bu-mox/scrubbed/120321-cvBS/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam
 curl -O https://gannet.fish.washington.edu/seashell/bu-mox/scrubbed/120321-cvBS/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam.bai
+
 ```
 
-```{r, engine='bash'}         
+```{r, engine='bash'}  
+
 cd ../data
 curl -O https://gannet.fish.washington.edu/seashell/bu-mox/data/Cvirg-genome/GCF_002022765.2_C_virginica-3.0_genomic.fa
 curl -O https://gannet.fish.washington.edu/seashell/bu-mox/data/Cvirg-genome/GCF_002022765.2_C_virginica-3.0_genomic.fa.fai
+
 ```
 
 ```{r, engine='bash'} 
+
 /home/shared/samtools-1.12/samtools tview \
 ../data/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam \
 ../data/GCF_002022765.2_C_virginica-3.0_genomic.fa
+
 ```
 
 
 ```{r, engine='bash'}
+
 cd ../data
 curl -O https://owl.fish.washington.edu/nightingales/C_gigas/F143n08_R2_001.fastq.gz
 curl -O https://owl.fish.washington.edu/nightingales/C_gigas/F143n08_R1_001.fastq.gz
+
 ```
 
 ```{r, engine='bash'}
+
 cd ../data
 curl -O https://gannet.fish.washington.edu/panopea/Cg-roslin/cgigas_uk_roslin_v1_genomic-mito.fa
 curl -O https://gannet.fish.washington.edu/panopea/Cg-roslin/cgigas_uk_roslin_v1_genomic-mito.fa.fai
 curl -O https://gannet.fish.washington.edu/panopea/Cg-roslin/GCF_902806645.1_cgigas_uk_roslin_v1_genomic-mito.gtf
+
 ```
 
 ## I've made adjustments to the OG code, i think i have to make the index
+```{r, engine=bash}
+
+/home/shared/hisat2-2.2.1/hisat2-build \
+-f ../data/cgigas_uk_roslin_v1_genomic-mito.fa \
+../output/cgigas_uk_roslin_v1_genomic-mito.index
+```
+
+
 ```{r, engine='bash'}
 /home/shared/hisat2-2.2.1/hisat2 \
 -x /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/cgigas_uk_roslin_v1_genomic-mito.index \

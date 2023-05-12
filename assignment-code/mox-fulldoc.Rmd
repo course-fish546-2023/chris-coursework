@@ -95,3 +95,14 @@ pwd
 rsync -avz /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/assignment-code/04* cnmntgna@mox.hyak.uw.edu:/gscratch/scrubbed/cnmntgna/assign_04
 
 ```
+
+###Then on mox, inside the assign_04 directory you will type”
+
+sbatch 04-job-sh to schedule the job.
+
+Once done you should have a couple of new files in the directory.
+
+You will want to check them to see if everything worked and then move the output back to your repo…
+```{bash}
+rsync -avz cnmntgna@mox.hyak.uw.edu:/gscratch/scrubbed/cnmntgna/assign_04/ .
+```
