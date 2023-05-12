@@ -1,18 +1,20 @@
 ---
 title: "Bash Tutorial"
-subtile: Week 01
 author: "Chris Mantegna"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: 
-  html_document:
+output:
+  pdf_document:
+    toc: yes
   theme: cerulean
-  highlight: 
-    toc: true
-    toc_float: true
-    number_sections: true
+  highlight:
+    toc: yes
+    toc_float: yes
+    number_sections: yes
     code_folding: show
-    code_download: true
+    code_download: yes
     callout-appearance: default
+  html_document: null
+subtile: Week 01
 ---
 ```{r setup, include=FALSE}
 # this is just here to remind me what I'm doing
@@ -30,7 +32,7 @@ knitr::opts_chunk$set(
 
 # Must download this file before getting started: <https://d.pr/f/BDaGTy>. I downloaded from the course page and unzipped, placed in data file for coursework repo.
 
-```{r, engine= bash}
+```{bash}
 
 pwd 
 
@@ -38,20 +40,20 @@ pwd
 
 # unzipped and pulled from local machine. verifying files exist
 
-```{r, engine=bash}
+```{bash}
 
 cd ../data/data-shell/data-shell
 ls
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 whoami
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 pwd
 
@@ -59,7 +61,7 @@ pwd
 
 # Moving back to the directory that has my data file per the exercise directions
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell
 ls
@@ -68,20 +70,20 @@ ls
 
 # 
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell
 ls -F
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
  ls -F data-shell
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
  ls -F /data-shell
 
@@ -89,58 +91,58 @@ ls -F
 
 # I've only had success with the full path
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell
 ls -F
 
 ```
 
-```{r, engine= bash}
+```{bash}
 
  ls ../data-shell/north-pacific-gyre/2012-07-03/
 
 ```
 
-```{r, engine= bash}
+```{bash}
 
  ls /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/north-pacific-gyre/2012-07-03/
 
 ```
 
-```{r, engine= bash}
+```{bash}
 
 cd ../data/data-shell/data-shell
 ls -F
 
 ```
 
-```{r, engine= bash}
+```{bash}
 
 mkdir thesis
 
 ```
 
-```{r, engine= bash}
+```{bash}
 
 ls -F
 ```
 
-```{r, engine= bash}
+```{bash}
 
 mv thesis/ ../data/data-shell/data-shell
 ls -F
 
 ```
 
-```{r, engine= bash}
+```{bash}
 
 cd ../data/data-shell/data-shell
 ls -F
 
 ```
 
-```{r, engine= bash}
+```{bash}
 
 cd /thesis
 
@@ -148,7 +150,7 @@ cd /thesis
 
 # since that wasn't enough path for the computer to follow me, i added this to get to the desired location
 
-```{r, engine= bash}
+```{bash}
 
 cd ../data/data-shell/data-shell/thesis
 ls
@@ -157,7 +159,7 @@ ls
 
 #did this directly in terminal
 
-```{r, engine= bash}
+```{bash}
 
 cd ../data/data-shell/data-shell/thesis
 nano draft.txt
@@ -166,7 +168,7 @@ nano draft.txt
 
 the desired location
 
-```{r, engine= bash}
+```{bash}
 
 cd ../data/data-shell/data-shell
  ls
@@ -175,13 +177,13 @@ cd ../data/data-shell/data-shell
 
 # i put it in the wrong directory and have to move it
 
-```{r, engine= bash}
+```{bash}
 
 mv /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/draft.text ../data/data-shell/data-shell/thesis
 
 ```
 
-```{r, engine= bash}
+```{bash}
 
 cd ../data/data-shell/data-shell/thesis
  ls
@@ -190,14 +192,14 @@ cd ../data/data-shell/data-shell/thesis
 
 # note sure why i move between directories but never seem to stay there, do i have to set my working directory out of the code directory?
 
-```{r, engine=bash}
+```{bash}
 
 rm draft.txt
 ls
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -207,7 +209,7 @@ ls
 
 # Adding the text from the assignment to remind myself of the tool: "Let's go into that directory with cd and run the command wc *.pdb. wc is the "word count" command: it counts the number of lines, words, and characters in files. The*  in *.pdb matches zero or more characters, so the shell turns* .pdb into a complete list of .pdb files"
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -215,7 +217,7 @@ wc *.pdb
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -223,7 +225,7 @@ wc -l *.pdb
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -231,14 +233,14 @@ wc -l *.pdb > lengths
 
 ```
 
-```{r, engine=bash}
+```{bash}
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
 ls lengths
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -246,7 +248,7 @@ cat lengths
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -254,7 +256,7 @@ sort -n lengths
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -263,7 +265,7 @@ head -1 sorted-lengths
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -271,7 +273,7 @@ sort -n lengths | head -1
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/molecules
 
@@ -279,7 +281,7 @@ wc -l *.pdb | sort -n | head -1
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/north-pacific-gyre/2012-07-03
 
@@ -287,7 +289,7 @@ wc -l *.txt
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/north-pacific-gyre/2012-07-03
 
@@ -295,7 +297,7 @@ wc -l *.txt | sort -n | head -5
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/north-pacific-gyre/2012-07-03
 
@@ -303,7 +305,7 @@ wc -l *.txt | sort -n | tail -5
 
 ```
 
-```{r, engine=bash}
+```{bash}
 
 cd /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/data/data-shell/data-shell/north-pacific-gyre/2012-07-03
 
