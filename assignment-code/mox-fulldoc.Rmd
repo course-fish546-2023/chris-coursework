@@ -1,28 +1,9 @@
 ---
-title: "Full Mox script doc"
+title: "Full Hyak Assignment"
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
-
-```{bash}
-#Find the gscratch directory & list files and folders in it
-
-cd /
-ls
-
-# locate the gscratch folder and navigate to the scrubbed folder, list files and folders 
-cd gscratch/scrubbed
-ls
-
-#if you aren't in the list, add yourself
-
-mkdir < Your NETID>
-
-#list files and verify you made it to the list
-
-ls
-
-#you should be there
-```
-
 ```{bash}
 # login to Mox
 
@@ -31,6 +12,8 @@ ssh cnmntgna@mox.hyak.uw.edu
 # your password is your NetID password
 
 ```
+
+### line 18 - 32 are for after you've accessed Mox for the first time only
 
 ```{bash}
 # Find the gscratch directory & list files and folders in it
@@ -42,7 +25,7 @@ cd gscratch/scrubbed
 ls
 
 # if you aren't in the list, add yourself
-mkdir < Your NETID>
+mkdir <Your NETID>
 
 # list files and verify you made it to the list
 ls
@@ -53,7 +36,8 @@ mkdir assign_04
 ```
 
 ```{bash}
-Everything below is the slurm script: 04-job.sh
+
+#Everything below is the slurm script: 04-job.sh
 
 #!/bin/bash
 ## Job Name
@@ -69,9 +53,9 @@ Everything below is the slurm script: 04-job.sh
 ## Memory per node
 #SBATCH --mem=100G
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=sr320@uw.edu
+#SBATCH --mail-user=cnmntgna@uw.edu
 ## Specify the working directory for this job
-#SBATCH --chdir=/gscratch/scrubbed/sr320/assign_04
+#SBATCH --chdir=/gscratch/scrubbed/cnmntgna/assign_04
 
 #run a python script you wrote!
 module load intel-python3_2017
@@ -90,10 +74,24 @@ echo "yah! I ddi it!!!!!!!!!!"
 
 #this writes out  tofile
 echo "yah! I ddi it!!!!!!!!!!" > text.file
+
+```
+
 ```{python}
 
+#Create a Python Script in the same directory name 04-hello.py with the contents:
+print("Hello, World!")
 
+```
 
+```{bash}
+pwd
 
+```
 
+### Now we want to move these two files to mox into the assign_04 directory. To to this you will need to type something to the effect of the following in the terminal
+```{bash}
 
+rsync -avz /home/shared/8TB_HDD_02/cnmntgna/GitHub/chris-coursework1/assignment-code/04* cnmntgna@mox.hyak.uw.edu:/gscratch/scrubbed/cnmntgna/assign_04
+
+```
