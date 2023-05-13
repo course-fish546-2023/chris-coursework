@@ -106,3 +106,7 @@ You will want to check them to see if everything worked and then move the output
 ```{bash}
 rsync -avz cnmntgna@mox.hyak.uw.edu:/gscratch/scrubbed/cnmntgna/assign_04/ .
 ```
+
+```{bash}
+head text.file
+```
