@@ -1,0 +1,51 @@
+---
+title: "CG Motifs"
+author: "Chris Mantegna"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+  theme: cerulean
+  highlight: 
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+    callout-appearance: default
+---
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  highlight = TRUE,    # Highlight code
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = TRUE,     # Hide warnings
+  message = TRUE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center" # Align plots to the center
+  )
+
+```
+
+```{r}
+
+getwd()
+
+```
+
+```{r, engine=bash}
+
+
+```
+
+```{r, engine=bash}
+
+
+```
+
+```{r, engine=bash}
+
+
+```
+
