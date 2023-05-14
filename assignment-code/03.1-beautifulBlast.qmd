@@ -5,6 +5,7 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document:
   theme: cerulean
+  title-block-banner: "https://github.com/course-fish546-2023/chris-coursework1/blob/main/photos/fleetweek.jpeg?raw=true"
   highlight: 
     toc: true
     toc_float: true
@@ -14,7 +15,20 @@ output:
     callout-appearance: default
 ---
 
-# Blast Off! ![ba](https://github.com/course-fish546-2023/chris-coursework1/blob/main/photos/fleetweek.jpeg?raw=true){width="20%"}
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  highlight = TRUE,    # Highlight code
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = TRUE,     # Hide warnings
+  message = TRUE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center" # Align plots to the center
+  )
+
+```
 
 The workflow to BLAST genetic sequences is similar regardless of type (i.e., genome, transcriptome, protein, gene, etc.). 'Blasting' a sequence is a fun way to compare your genetic data against the largest 'crowd sourced' database of reference genetic data available for free. Here we will walk through the process and a few things you can do to use with the data you find.
 
@@ -27,9 +41,6 @@ tar -xf ncbi-blast-2.13.0+-x64-linux.tar.gz
 ```{bash}
 ls /home/shared/8TB_HDD_02/cnmntgna/Applications/bioinfo/
 
-# trying to remove macos copy, receive an error message
-# made the removal happen over in the 'Terminal' access tab
-# rm -r ncbi-blast-2.13.0+-x64-macosx.tar.gz
 ```
 
 ```{bash}
@@ -45,7 +56,7 @@ ls ../data
 ```
 
 ```{bash}
-# add r engine/ false echo code for rendering in 1.1
+
 /home/shared/8TB_HDD_02/cnmntgna/Applications/bioinfo/ncbi-blast-2.13.0+/bin/makeblastdb \
 -in /home/shared/8TB_HDD_02/cnmntgna/data/uniprot_sprot_r2023_01.fasta \
 -dbtype prot \
@@ -75,7 +86,6 @@ grep -c ">" /home/shared/8TB_HDD_02/cnmntgna/data/Ab_4denovo_CLC6_a.fa
 -max_target_seqs 1 \
 -outfmt 6
 
-#code throws the following warning: Warning: [blastx] Examining 5 or more matches is recommended
 ```
 
 ```{bash}
@@ -88,102 +98,3 @@ curl -O "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/sea
 
 ```
 
----
-title: "blast"
-output: md_document
-date: "2023-03-30"
----
-
-# Download Software
-
-https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.13.0+-x64-linux.tar.gz
-
-``` bash
-cd /home/jovyan/applications
-curl -O https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.13.0+-x64-linux.tar.gz
-```
-
-``` bash
-cd /home/jovyan/applications
-tar -xf ncbi-blast-2.13.0+-x64-linux.tar.gz
-```
-
-``` bash
-~/applications/ncbi-blast-2.13.0+/bin/blastx -h
-```
-
-# Make a database
-
-``` bash
-cd ../data
-curl -O https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
-mv uniprot_sprot.fasta.gz uniprot_sprot_r2023_01.fasta.gz
-gunzip -k uniprot_sprot_r2023_01.fasta.gz
-ls ../data
-```
-
-``` bash
-~/applications/ncbi-blast-2.13.0+/bin/makeblastdb \
--in ../data/uniprot_sprot_r2023_01.fasta \
--dbtype prot \
--out ../blastdb/uniprot_sprot_r2023_01
-```
-
-# download query
-
-``` bash
-curl https://eagle.fish.washington.edu/cnidarian/Ab_4denovo_CLC6_a.fa \
--k \
-> ../data/Ab_4denovo_CLC6_a.fa
-```
-
-```{bash}
-head ../data/Ab_4denovo_CLC6_a.fa
-echo "How many sequences are there?"
-grep -c ">" ../data/Ab_4denovo_CLC6_a.fa
-```
-
-# blast
-
-``` bash
-~/applications/ncbi-blast-2.13.0+/bin/blastx \
--query ../data/Ab_4denovo_CLC6_a.fa \
--db ../blastdb/uniprot_sprot_r2023_01 \
--out ../output/Ab_4-uniprot_blastx.tab \
--evalue 1E-20 \
--num_threads 20 \
--max_target_seqs 1 \
--outfmt 6
-```
-
-# Joining with Annotation information
-
-First need to change formate of blast output in bash...
-
-``` bash
-tr '|' '\t' < ../output/Ab_4-uniprot_blastx.tab \
-> ../output/Ab_4-uniprot_blastx_sep.tab
-```
-
-## Now into R
-
-``` {{r}}
-library(tidyverse)
-```
-
-read in data
-
-``` {{r}}
-bltabl <- read.csv("../output/Ab_4-uniprot_blastx_sep.tab", sep = '\t', header = FALSE)
-
-spgo <- read.csv("https://gannet.fish.washington.edu/seashell/snaps/uniprot_table_r2023_01.tab", sep = '\t', header = TRUE)
-```
-
-joining
-
-``` {{r}}
-left_join(bltabl, spgo,  by = c("V3" = "Entry")) %>%
-  select(V1, V3, V13, Protein.names, Organism, Gene.Ontology..biological.process., Gene.Ontology.IDs) %>% mutate(V1 = str_replace_all(V1, 
-            pattern = "solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed", replacement = "Ab")) %>%
-  write_delim("../output/blast_annot_go.tab", delim = '\t')
-```

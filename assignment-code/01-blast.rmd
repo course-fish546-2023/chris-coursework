@@ -68,7 +68,6 @@ curl -O "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/sea
 
 ```
 
-
 ```{bash}
 
 tr '|' '\t' < /home/shared/8TB_HDD_02/cnmntgna/output/Ab_4-uniprot_blastx.tab \
@@ -98,7 +97,7 @@ bltabl <- read.csv("/home/shared/8TB_HDD_02/cnmntgna/output/Ab_4-uniprot_blastx_
 head(bltabl)
 
 # Not sure where this is and am sure it isn't in the path listed below
-spgo <- read.csv("/home/shared/8TB_HDD_02/cnmntgna/data/uniprot_table_r2023_01.tab", sep = '\t', header = TRUE)
+spgo <- read.csv("https://gannet.fish.washington.edu/seashell/snaps/uniprot_table_r2023_01.tab", sep = '\t', header = TRUE)
 str(spgo)
 
 ```
@@ -125,5 +124,3 @@ left_join(bltabl, spgo,  by = c("V3" = "Entry")) %>%
 ```{r}
 annot_tab <- read.csv("../output/blast_annot_go.tab", sep = '\t', header = TRUE)
 ```
-
-

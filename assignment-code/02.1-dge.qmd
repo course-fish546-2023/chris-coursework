@@ -1,6 +1,5 @@
 ---
 title: "Differential Gene Expression Analysis with Kallisto & DESeq2"
-subtitle: "Selecting expression from a pile of stuff"
 author: "Chris Mantegna"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
@@ -14,27 +13,6 @@ output:
     code_download: true
     callout-appearance: default
 ---
-
-```{r, echo=FALSE}
-#install.packages("quarto")
-```
-#Needed
-# this is the css directive to add a banner behind my title, if it doesn't render that is ok we can remove it - it is not necessary, try to replace the path with the png before completely ditching it
-
-```{css, echo=FALSE}
-
-.title-banner {
-  background-image: url('https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpAndy.jpg?raw=true');
-  background-size: cover;
-  background-position: left;
-  text-align: center;
-  padding: 50px;
-  color: white;
-}
-
-```
-# Needed
-# this chunk is the global default options chunk. unless otherwise specified each of the chunks will run according to these parameters
 
 ```{r setup, include=FALSE}
 
@@ -72,14 +50,6 @@ pre[class] {
 }
 
 ```
-# Needed
-# this will be removed because you cannot set a callout chunk like this no matter what Chat GPT tells you to fix your callout syntax 
-```{css, echo=FALSE}
-
-file.copy(from = "https://github.com/course-fish546-2023/chris-coursework1/blob/main/photos/miranda.png?raw=true", to = "photos/miranda.png", overwrite = TRUE)
-
-```
-#Start of the doc behind the header, everything else to this point is setup
 # Purpose
 
 Using RNASeq data to compare gene expression is a standard workflow to help scientists clarify which genes are differently expressed than their 'normal' state when exposed to perturbations. We're starting from the place where you've already QC'd your RNASeq files and are ready to jump into quantification and statistical analysis. If you're interested in learning more about the the QC process and application, check out [The Galaxy Project](https://training.galaxyproject.org/training-material/topics/sequence-analysis/tutorials/quality-control/tutorial.html). If you already know but want to check out your options, look into [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) or [MultiQC](https://multiqc.info/).
@@ -151,9 +121,7 @@ library(Biostrings)
 
 ```{r callout, type='note'}
 
-knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true")
-
-"I had hope. Anyway, you ended up disappointing me more than any of the other silly packages. If your library call doesn't yield the package you requested use the install.packages() code."
+If your library call doesn't yield the package you requested use the install.packages() code."
 
 ```
 
@@ -204,9 +172,8 @@ quant -i ../data/cgigas_roslin_rna.index \
 # fix the callout syntax
 ```{r callout, type='note'}
 
-knitr::include_graphics("https://github.com/course-fish546-2023/chris-musselcon/blob/main/photos/dwpMiranda.jpg?raw=true")
 
-"Don't be ridiculous, everybody wants this. Everybody wants to be us. Every file wants to be in a repo, but not every file can be. At this point if you haven't saved and committed your work to your repo, you need to. Keep in mind that GitHub will not allow you to commit files greater than 100MB. If any of that sounded new, check out [Happy Git] (https://happygitwithr.com/index.html) to get yourself in order!"
+Every file wants to be in a repo, but not every file can be. At this point if you haven't saved and committed your work to your repo, you need to. Keep in mind that GitHub will not allow you to commit files greater than 100MB. If any of that sounded new, check out [Happy Git] (https://happygitwithr.com/index.html) to get yourself in order!
 
 ```
 
@@ -292,7 +259,7 @@ deseq2.res <- results(deseq2.dds)
 deseq2.res <- deseq2.res[order(rownames(deseq2.res)), ]
 
 ```
-
+## Take a look
 ```{r}
 
 head(deseq2.res)
@@ -306,6 +273,7 @@ dim(deseq2.res[!is.na(deseq2.res$padj) & deseq2.res$padj <= 0.05, ])
 
 ```
 
+# First pass at visualizing significant points
 ```{r}
 
 tmp <- deseq2.res
@@ -323,9 +291,86 @@ points(tmp.sig$baseMean, tmp.sig$log2FoldChange, pch=20, cex=0.45, col="red")
 abline(h=c(-1,1), col="blue")
 
 ```
+# Now we can dig in a bit to see if we can get an even better look at the data
+```{r newplot, eval=TRUE}
+# Prepare the data for plotting
+res_df <- as.data.frame(deseq2.res)
+res_df$gene <- row.names(res_df)
+
+```
+# Here's a Volcano to be proud of!
+```{r}
+# Create volcano plot
+volcano_plot <- ggplot(res_df, aes(x = log2FoldChange, y = -log10(padj), color = padj < 0.05)) +
+  geom_point(alpha = 0.6, size = 1.5) +
+  scale_color_manual(values = c("grey", "red")) +
+  labs(title = "Volcano Plot",
+       x = "Log2 Fold Change",
+       y = "-Log10 Adjusted P-value",
+       color = "Significantly\nDifferentially Expressed") +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "top")
+
+print(volcano_plot)
+```
+
 
 ```{r}
 
 write.table(tmp.sig, "../output/DEGlist.tab", row.names = T)
+
+```
+
+```{r, eval=TRUE}
+deglist <- read.csv("../output/DEGlist.tab", sep = '\t', header = TRUE)
+deglist$RowName <- rownames(deglist)
+deglist2 <- deglist[, c("RowName", "pvalue")] # Optionally, reorder the columns
+```
+
+
+```{r, eval=TRUE}
+datatable(deglist)
+```
+
+
+# Annotation?
+```{r}
+cg_sp <- read.csv("https://raw.githubusercontent.com/sr320/nb-2022/main/C_gigas/analyses/CgR-blastp-sp.tab", header = FALSE, sep="\t")  %>%
+  distinct(V1, .keep_all = TRUE)
+```
+
+```{r}
+loc <- read.csv("https://raw.githubusercontent.com/sr320/nb-2022/main/C_gigas/analyses/LOC_Acc.tab", sep = " ", header = FALSE)
+```
+
+```{r}
+comb <- left_join(loc, cg_sp, by = c("V2" = "V1")) %>%
+  left_join(deglist, by = c("V1" = "RowName"))
+```
+
+
+
+# Gene Enrichment Analysis
+
+```{r}
+gene_deg_status <- res_df %>%
+  mutate(degstaus = ifelse(padj < 0.05, 1, 0)) 
+```
+
+```{r}
+# Read the FASTA file
+fasta_data <- readDNAStringSet("../data/rna.fna")
+
+# Calculate gene lengths
+gene_lengths <- width(fasta_data)
+
+
+# Extract gene names/IDs from sequence IDs
+gene_names <- sapply(names(fasta_data), function(x) strsplit(x, " ")[[1]][1])
+
+# Create a data frame with gene IDs and lengths
+gene_lengths_df <- data.frame(geneID = gene_names, length = gene_lengths)
 
 ```
